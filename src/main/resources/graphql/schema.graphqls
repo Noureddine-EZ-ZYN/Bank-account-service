@@ -1,0 +1,13 @@
+type Query{
+    accountsList : [BankAccount]
+}
+type BankAccount{
+id: String,
+ createAt :Float,
+    balance :Float,
+    currency:String,
+    type:String
+
+
+
+}
