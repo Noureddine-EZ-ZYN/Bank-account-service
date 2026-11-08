@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -22,12 +21,25 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO) {
         BankAccount bankAccount=BankAccount.builder()
-                .id(UUID.randomUUID().toString())
                 .createdAt(new Date())
                 .balance(bankAccountDTO.getBalance())
+                .currency(bankAccountDTO.getCurrency())
                 .type(bankAccountDTO.getType())
                 .build();
        BankAccount saveBankAccount= bankAccountRepository.save(bankAccount);
+        return  accountMapper.fromBankAccount(saveBankAccount);
+
+    }
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountDTO) {
+        BankAccount bankAccount=BankAccount.builder()
+                .createdAt(new Date())
+                .balance(bankAccountDTO.getBalance())
+                .currency(bankAccountDTO.getCurrency())
+                .type(bankAccountDTO.getType())
+                .build();
+        BankAccount saveBankAccount= bankAccountRepository.save(bankAccount);
         return  accountMapper.fromBankAccount(saveBankAccount);
 
     }
