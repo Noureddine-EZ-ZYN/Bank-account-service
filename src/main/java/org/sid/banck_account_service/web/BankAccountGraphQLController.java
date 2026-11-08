@@ -2,7 +2,9 @@ package org.sid.banck_account_service.web;
 import org.sid.banck_account_service.dto.BankAccountRequestDTO;
 import org.sid.banck_account_service.dto.BankAccountResponseDTO;
 import org.sid.banck_account_service.entities.BankAccount;
+import org.sid.banck_account_service.entities.Customer;
 import org.sid.banck_account_service.repositories.BankAccountRepository;
+import org.sid.banck_account_service.repositories.CustomerRepository;
 import org.sid.banck_account_service.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -18,6 +20,8 @@ public class BankAccountGraphQLController {
     private BankAccountRepository bankAccountRepository;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CustomerRepository customerRepository;
     @QueryMapping
     public List<BankAccount> accountsList(){
         return  bankAccountRepository.findAll();
@@ -41,6 +45,10 @@ public class BankAccountGraphQLController {
     public Boolean deleteAccount(@Argument String id){
        bankAccountRepository.deleteById(id);
         return true;
+    }
+@QueryMapping
+    public List<Customer> customers(){
+        return customerRepository.findAll();
     }
 }
 
